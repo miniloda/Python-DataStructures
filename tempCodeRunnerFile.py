@@ -1,1 +1,1 @@
-print(ll.stringify_list())
+ll.stringify_list()

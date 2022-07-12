@@ -32,16 +32,18 @@ class LinkedList:
         new_node = Node(new_value)
         new_node.set_next_node(self.head_node)
         self.head_node = new_node
+
     def stringify_list(self):
         string_list = ""
         current_node = self.get_head_node()
         while current_node:
             if current_node.get_value() is not None:
                 string_list += str(current_node.get_value()) + "\n"
-                print(current_node.get_value())
                 current_node = current_node.get_next_node()
         return string_list
-    def swap_nodes(self,value1,value2): #FIXME: should be able to swap nodes in the middle of the list
+    def swap_nodes(self,value1,value2):
+        value_1_prev = None
+        value_2_prev = None
         if self.get_head_node() is None:
             return
         current_node = self.get_head_node()
@@ -83,9 +85,10 @@ class LinkedList:
             value_1_prev.set_next_node(value_2_node)
         else:
             value_1_prev.set_next_node(value_2_node)
-            value_2_node.set_next_node(value_1_next)
             value_2_prev.set_next_node(value_1_node)
-            value_1_node.set_next_node(value_2_next)
+            temp_node = value_1_node.get_next_node()
+            value_1_node.set_next_node(value_2_node.get_next_node())
+            value_2_node.set_next_node(temp_node)
   # Define your remove_node method below:
     def remove_node(self, value_to_remove):
         current_node = self.head_node
@@ -99,7 +102,11 @@ class LinkedList:
                     break
             else:
                 current_node = current_node.get_next_node()
-ll = LinkedList(5)
-ll.insert_beginning(70)
-ll.insert_beginning(5675)
-ll.insert_beginning(90)
+#Uncomment to test
+# ll = LinkedList(5)
+# ll.insert_beginning(70)
+# ll.insert_beginning(5675)
+# ll.insert_beginning(90)
+# print(ll.stringify_list())
+# ll.swap_nodes(70,5)
+# print(ll.stringify_list())
