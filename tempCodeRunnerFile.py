@@ -1,0 +1,1 @@
+print(ll.stringify_list())
