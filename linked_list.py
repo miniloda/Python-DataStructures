@@ -28,11 +28,21 @@ class LinkedList:
         self.head_node = Node(value)
     def get_head_node(self):
         return self.head_node
-    def insert_beginning(self, new_value):
-        new_node = Node(new_value)
-        new_node.set_next_node(self.head_node)
-        self.head_node = new_node
-
+    def insert(self, new_value, index = 0):
+        if index == 0:
+            self.head_node = Node(new_value, self.head_node)
+        else:
+            count = 0
+            current_node = self.head_node
+            while count != index - 1:
+                current_node = current_node.get_next_node()
+                count += 1
+            current_node.set_next_node(Node(new_value, current_node.get_next_node()))
+    def append(self, new_value):# Not good for large lists, use doubly linked list instead
+        current_node = self.head_node
+        while current_node.get_next_node():
+            current_node = current_node.get_next_node()
+        current_node.set_next_node(Node(new_value))
     def stringify_list(self):
         string_list = ""
         current_node = self.get_head_node()
@@ -41,6 +51,13 @@ class LinkedList:
                 string_list += str(current_node.get_value()) + "\n"
                 current_node = current_node.get_next_node()
         return string_list
+    def to_list(self):
+        current_node = self.get_head_node()
+        list_of_values = []
+        while current_node:
+            list_of_values.append(current_node.get_value())
+            current_node = current_node.get_next_node()
+        return list_of_values
     def swap_nodes(self,value1,value2):
         value_1_prev = None
         value_2_prev = None
@@ -102,11 +119,25 @@ class LinkedList:
                     break
             else:
                 current_node = current_node.get_next_node()
+    def pop(self, index = 0):
+        """The pop() method removes the item at the given index from the list and returns the removed item.
+        The method returns the value of the last item in the list if no index is specified.
+        If the list is empty, the method raises a ValueError exception.
+        """
+        count = 0
+        if self.head_node is None:
+            raise ValueError("The list is empty")
+        current_node = self.head_node
+        while count != index:
+            current_node = current_node.get_next_node()
+        self.remove_node(current_node.get_value())
+        return current_node.get_value()
 #Uncomment to test
-# ll = LinkedList(5)
-# ll.insert_beginning(70)
-# ll.insert_beginning(5675)
-# ll.insert_beginning(90)
-# print(ll.stringify_list())
-# ll.swap_nodes(70,5)
-# print(ll.stringify_list())
+ll = LinkedList(5)
+ll.insert(70)
+ll.insert(5675)
+ll.insert(90)
+ll.append(20)
+print(ll.stringify_list())
+ll.swap_nodes(70,5)
+print(ll.to_list())
