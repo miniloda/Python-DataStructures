@@ -1,10 +1,4 @@
 
-
-from flask import current_app
-from nbformat import current_nbformat
-from scipy.fft import next_fast_len
-
-
 class Node:
     """Node class for doubly linked list."""
     def __init__(self, value, next_node=None, prev_node=None):
