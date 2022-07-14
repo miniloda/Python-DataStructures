@@ -25,6 +25,8 @@ class Node:
 class LinkedList:
     """LinkedList class for linked list."""
     def __init__(self, value=None):
+        self.counter = 0
+        self.current_node = None
         self.head_node = Node(value)
     def get_head_node(self):
         return self.head_node
@@ -51,13 +53,19 @@ class LinkedList:
                 string_list += str(current_node.get_value()) + "\n"
                 current_node = current_node.get_next_node()
         return string_list
-    def to_list(self):
-        current_node = self.get_head_node()
-        list_of_values = []
-        while current_node:
-            list_of_values.append(current_node.get_value())
-            current_node = current_node.get_next_node()
-        return list_of_values
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.counter == 0:
+            self.current_node = self.head_node
+            self.counter += 1
+            return self.get_head_node().get_value()
+        while self.current_node.get_next_node():
+            self.current_node = self.current_node.get_next_node()
+            return self.current_node.get_value()
+        self.counter = 0
+        self.current_node = None
+        raise StopIteration  # signals "the end"
     def swap_nodes(self,value1,value2):
         value_1_prev = None
         value_2_prev = None
@@ -133,11 +141,16 @@ class LinkedList:
         self.remove_node(current_node.get_value())
         return current_node.get_value()
 #Uncomment to test
-ll = LinkedList(5)
-ll.insert(70)
-ll.insert(5675)
-ll.insert(90)
-ll.append(20)
-print(ll.stringify_list())
-ll.swap_nodes(70,5)
-print(ll.to_list())
+# ll = LinkedList(5)
+# ll.insert(70)
+# ll.insert(5675)
+# ll.insert(90)
+# ll.append(20)
+# print(ll.stringify_list())
+# ll.swap_nodes(70,5)
+# Added iteration:
+# print(list(ll))
+# for i in ll:
+#     print(i)
+# my_iter_list = iter(ll)
+# print(next(my_iter_list))
