@@ -1,3 +1,4 @@
+
 class Key():
     def __init__(self, key, value = None, next_node = None, prev_node = None):
         self.key = key
@@ -64,6 +65,7 @@ class HashMap():
             if current_node.get_key() == key:
                 print(current_node.get_value())
             current_node = current_node.get_next_node()
+    
 
 dict = HashMap()
 dict.put("a", 1)

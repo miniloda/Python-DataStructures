@@ -163,12 +163,6 @@ class DoublyLinkedList:
                 else:
                     current_node = current_node.get_next_node()
             raise IndexError("List index out of range")
-    def test(self):
-        current_node = self.head_node
-        print(current_node.get_value())
-        while current_node.get_next_node():
-            current_node = current_node.get_next_node()
-            print(current_node.get_value())
     def __len__(self):
         count = 1
         current_node = self.head_node
@@ -176,6 +170,15 @@ class DoublyLinkedList:
             count+=1
             current_node = current_node.get_next_node()
         return count
+    def __str__(self):
+        """__summary__: returns a string representation of the linked_list"""
+        lst = []
+        current_node = self.head_node
+        lst.append(current_node.get_value())
+        while current_node.get_next_node() is not None:
+            lst.append(current_node.get_next_node().get_value())
+            current_node = current_node.get_next_node()
+        return str(lst)
 #Uncomment to test
 #Uncomment to test
 # ll = DoublyLinkedList()
@@ -183,7 +186,6 @@ class DoublyLinkedList:
 # ll.insert(5675)
 # ll.insert(90)
 # ll.append(20)
-# print(ll.stringify_list())
 # ll.swap_nodes(70,5)
 # Added iteration:
 # print(list(ll))
@@ -192,4 +194,5 @@ class DoublyLinkedList:
 # my_iter_list = iter(ll)
 # for i in ll:
 #     print(i)
-# print(len(ll))
+# print(ll)
+
