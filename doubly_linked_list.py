@@ -76,15 +76,16 @@ class DoublyLinkedList:
             current_tail_node.set_next_node(new_tail_node)
             self.tail_node = new_tail_node
             self.tail_node.set_prev_node(current_tail_node)
-    def insert(self, index, value):
+    def insert(self, new_value, index = 0):
         if index == 0:
-            self.set_head_node(value)
+            self.head_node = Node(new_value, self.head_node)
         else:
-            current_node = self.head_node
             count = 0
-            while count != index:
-                if current_node.get_next_node() is None:
-                    self.append(value)
+            current_node = self.head_node
+            while count != index - 1:
+                current_node = current_node.get_next_node()
+                count += 1
+            current_node.set_next_node(Node(new_value, current_node.get_next_node()))
     def pop(self, index = -1):
         """__summary__: removes the item at the given index from the list and returns the removed item.
         The method returns the value of the last item in the list if no index is specified.
@@ -113,7 +114,44 @@ class DoublyLinkedList:
         next_node = node.get_next_node()
         prev_node.set_next_node(next_node)
         next_node.set_prev_node(prev_node)
+    def __getitem__(self, item):
+        if item >= 0:
+            current_node = self.get_head_node()
+            index = 0
+            if index == item:
+                return current_node.get_value()
+            while current_node.get_next_node():
+                index+=1
+                if index == item:
+                    return current_node.get_next_node().get_value()
+                else:
+                    current_node = current_node.get_next_node()
+            raise IndexError("List index out of range")
+        else:
+            current_node = self.tail_node
+            index = -1
+            if index == item:
+                return current_node.get_value()
+            while current_node.get_next_node():
+                index-=1
+                if index == item:
+                    return current_node.get_next_node().get_value()
+                else:
+                    current_node = current_node.get_next_node()
+            raise IndexError("List index out of range")
 
 #Uncomment to test
-dll = DoublyLinkedList()
-print(dll.to_list())
+#Uncomment to test
+ll = DoublyLinkedList()
+ll.insert(70)
+ll.insert(5675)
+ll.insert(90)
+ll.append(20)
+# print(ll.stringify_list())
+# ll.swap_nodes(70,5)
+# Added iteration:
+# print(list(ll))
+# for i in ll:
+#     print(i)
+# my_iter_list = iter(ll)
+print(ll[-1])

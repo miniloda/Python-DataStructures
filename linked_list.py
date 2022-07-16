@@ -140,12 +140,38 @@ class LinkedList:
             current_node = current_node.get_next_node()
         self.remove_node(current_node.get_value())
         return current_node.get_value()
+    def __getitem__(self, item):
+        if item >= 0:
+            current_node = self.get_head_node()
+            index = 0
+            if index == item:
+                return current_node.get_value()
+            while current_node.get_next_node():
+                index+=1
+                if index == item:
+                    return current_node.get_next_node().get_value()
+                else:
+                    current_node = current_node.get_next_node()
+            raise IndexError("List index out of range")
+        else:
+            current_node = self.tail_node
+            index = -1
+            if index == item:
+                return current_node.get_value()
+            while current_node.get_next_node():
+                index-=1
+                if index == item:
+                    return current_node.get_next_node().get_value()
+                else:
+                    current_node = current_node.get_next_node()
+            raise IndexError("List index out of range")
+
 #Uncomment to test
-# ll = LinkedList(5)
-# ll.insert(70)
-# ll.insert(5675)
-# ll.insert(90)
-# ll.append(20)
+ll = LinkedList(5)
+ll.insert(70)
+ll.insert(5675)
+ll.insert(90)
+ll.append(20)
 # print(ll.stringify_list())
 # ll.swap_nodes(70,5)
 # Added iteration:
@@ -153,4 +179,4 @@ class LinkedList:
 # for i in ll:
 #     print(i)
 # my_iter_list = iter(ll)
-# print(next(my_iter_list))
+print(ll[-1])
