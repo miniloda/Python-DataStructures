@@ -23,6 +23,7 @@ class Node:
 
 class DoublyLinkedList:
     def __init__(self):
+        self.counter = 0
         self.head_node = None
         self.tail_node = None
     def get_head_node(self):
@@ -39,13 +40,7 @@ class DoublyLinkedList:
             current_head_node.set_prev_node(new_head_node)
             self.head_node = current_head_node
             self.head_node.set_next_node(current_head_node)
-    def to_list(self):
-        current_node = self.get_head_node()
-        list_of_values = []
-        while current_node:
-            list_of_values.append(current_node.get_value())
-            current_node = current_node.get_next_node()
-        return list_of_values
+
     def remove_tail(self):
         current_tail_node = self.get_tail_node()
         if current_tail_node is None:
@@ -76,8 +71,23 @@ class DoublyLinkedList:
             current_tail_node.set_next_node(new_tail_node)
             self.tail_node = new_tail_node
             self.tail_node.set_prev_node(current_tail_node)
+    def tail(self):
+        return self.tail_node.get_value()
+    def count(self):
+        current_node = self.head_node
+        count = 0
+        while current_node:
+            count+=1
+            current_node = current_node.get_next_node()
+        return count
     def insert(self, new_value, index = 0):
-        if index == 0:
+        new_node = Node(new_value)
+        if self.tail_node is None:
+            self.tail_node = new_node
+            self.head_node = new_node
+        elif index == self.count():
+            self.head_node = Node(new_value, prev_node=self.tail_node)
+        elif index == 0:
             self.head_node = Node(new_value, self.head_node)
         else:
             count = 0
@@ -114,6 +124,20 @@ class DoublyLinkedList:
         next_node = node.get_next_node()
         prev_node.set_next_node(next_node)
         next_node.set_prev_node(prev_node)
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.counter == 0:
+            self.current_node = self.head_node
+            self.counter += 1
+
+            return self.get_head_node().get_value()
+        while self.current_node.get_next_node() is not None:
+            self.current_node = self.current_node.get_next_node()
+            return self.current_node.get_value()
+        self.counter = 0
+        self.current_node = None
+        raise StopIteration 
     def __getitem__(self, item):
         if item >= 0:
             current_node = self.get_head_node()
@@ -139,14 +163,26 @@ class DoublyLinkedList:
                 else:
                     current_node = current_node.get_next_node()
             raise IndexError("List index out of range")
-
+    def test(self):
+        current_node = self.head_node
+        print(current_node.get_value())
+        while current_node.get_next_node():
+            current_node = current_node.get_next_node()
+            print(current_node.get_value())
+    def __len__(self):
+        count = 1
+        current_node = self.head_node
+        while current_node.get_next_node():
+            count+=1
+            current_node = current_node.get_next_node()
+        return count
 #Uncomment to test
 #Uncomment to test
-ll = DoublyLinkedList()
-ll.insert(70)
-ll.insert(5675)
-ll.insert(90)
-ll.append(20)
+# ll = DoublyLinkedList()
+# ll.insert(70)
+# ll.insert(5675)
+# ll.insert(90)
+# ll.append(20)
 # print(ll.stringify_list())
 # ll.swap_nodes(70,5)
 # Added iteration:
@@ -154,4 +190,6 @@ ll.append(20)
 # for i in ll:
 #     print(i)
 # my_iter_list = iter(ll)
-print(ll[-1])
+# for i in ll:
+#     print(i)
+# print(len(ll))

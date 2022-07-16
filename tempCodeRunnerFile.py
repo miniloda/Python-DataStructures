@@ -1,1 +1,1 @@
-ll.stringify_list()
+ll.append(20)

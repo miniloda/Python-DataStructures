@@ -175,8 +175,8 @@ ll.append(20)
 # print(ll.stringify_list())
 # ll.swap_nodes(70,5)
 # Added iteration:
-# print(list(ll))
-# for i in ll:
-#     print(i)
+print(list(ll))
+for i in ll:
+    print(i)
 # my_iter_list = iter(ll)
-print(ll[-1])
+
