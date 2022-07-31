@@ -1,1 +1,2 @@
-ll.append(20)
+
+reverse_linked_list(ll)
